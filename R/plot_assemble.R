@@ -4,7 +4,7 @@
 #' @export
 print.ggassemble <- function(x, newpage = is.null(vp), vp = NULL, ...) {
   if (newpage) grid.newpage()
-
+  
   grDevices::recordGraphics(
     requireNamespace("patchwork", quietly = TRUE),
     list(),
@@ -19,9 +19,9 @@ print.ggassemble <- function(x, newpage = is.null(vp), vp = NULL, ...) {
   assemble <- get_assemble(x)
   gtable <- build_assemble(assemble)
   gtable <- annotate_table(gtable, annotation)
-
+  
   set_last_plot(x)
-
+  
   if (is.null(vp)) {
     grid.draw(gtable)
   } else {
@@ -141,8 +141,8 @@ simplify_gt <- function(gt) {
   gt_new$heights <- convertHeight(gt$heights, 'mm')[-p_rows]
   gt_new <- gtable_add_rows(gt_new, unit(1, 'null'), rows[1] - 1)
   gt_new <- gtable_add_cols(gt_new, unit(1, 'null'), cols[1] - 1)
-  #gt$grobs[gt$layout$name == 'background'] <- NULL
-  gt$layout <- gt$layout
+  gt$grobs[gt$layout$name == 'background'] <- NULL
+  gt$layout <- gt$layout[gt$layout$name != 'background', ]
   gt <- if (gt$respect) {
     simplify_fixed(gt, gt_new, panels, rows, cols)
   } else {
@@ -342,17 +342,17 @@ add_guides <- function(gt) {
       }
     }
   }
-  if (guide_pos != 'right') {
-    gt <- gtable_add_cols(gt, unit(c(0, 0), 'mm'), panel_loc$r + 3)
-  }
   if (guide_pos != 'left') {
     gt <- gtable_add_cols(gt, unit(c(0, 0), 'mm'), panel_loc$l - 4)
   }
-  if (guide_pos != 'bottom') {
-    gt <- gtable_add_rows(gt, unit(c(0, 0), 'mm'), panel_loc$b + 5)
+  if (guide_pos != 'right') {
+    gt <- gtable_add_cols(gt, unit(c(0, 0), 'mm'), panel_loc$r + 3)
   }
   if (guide_pos != 'top') {
     gt <- gtable_add_rows(gt, unit(c(0, 0), 'mm'), panel_loc$t - 4)
+  }
+  if (guide_pos != 'bottom') {
+    gt <- gtable_add_rows(gt, unit(c(0, 0), 'mm'), panel_loc$b + 5)
   }
   gt
 }
