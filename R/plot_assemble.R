@@ -148,7 +148,7 @@ simplify_gt <- function(gt) {
   } else {
     simplify_free(gt, gt_new, panels, rows, cols)
   }
-  keep <- gt$layout$name
+  keep <- gt$layout$name != '-'
   gt$grobs <- gt$grobs[keep]
   gt$layout <- gt$layout[keep, , drop = FALSE]
   gt
