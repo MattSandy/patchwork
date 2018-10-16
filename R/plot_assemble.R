@@ -142,13 +142,13 @@ simplify_gt <- function(gt) {
   gt_new <- gtable_add_rows(gt_new, unit(1, 'null'), rows[1] - 1)
   gt_new <- gtable_add_cols(gt_new, unit(1, 'null'), cols[1] - 1)
   #gt$grobs[gt$layout$name == 'background'] <- NULL
-  #gt$layout <- gt$layout[gt$layout$name != 'background', ]
+  gt$layout <- gt$layout
   gt <- if (gt$respect) {
     simplify_fixed(gt, gt_new, panels, rows, cols)
   } else {
     simplify_free(gt, gt_new, panels, rows, cols)
   }
-  keep <- gt$layout$name != 'background'
+  keep <- gt$layout$name
   gt$grobs <- gt$grobs[keep]
   gt$layout <- gt$layout[keep, , drop = FALSE]
   gt
