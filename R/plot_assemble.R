@@ -141,8 +141,8 @@ simplify_gt <- function(gt) {
   gt_new$heights <- convertHeight(gt$heights, 'mm')[-p_rows]
   gt_new <- gtable_add_rows(gt_new, unit(1, 'null'), rows[1] - 1)
   gt_new <- gtable_add_cols(gt_new, unit(1, 'null'), cols[1] - 1)
-  gt$grobs[gt$layout$name == 'background'] <- NULL
-  gt$layout <- gt$layout[gt$layout$name != 'background', ]
+  #gt$grobs[gt$layout$name == 'background'] <- NULL
+  #gt$layout <- gt$layout[gt$layout$name != 'background', ]
   gt <- if (gt$respect) {
     simplify_fixed(gt, gt_new, panels, rows, cols)
   } else {
