@@ -8,7 +8,10 @@ make_cell <- function() {
   heights[10] <- unit(1, 'null')
   table <- gtable(widths, heights)
   # Mark the panel cell
-  table <- gtable_add_grob(table, list(zeroGrob()), 10, 8, z = -Inf, name = 'panel_cell')
+  table <- gtable_add_grob(table, list(zeroGrob()), 10, 8, z = -Inf, name = 'panel_cell', theme = ttheme_minimal(
+    core = list(bg_params = list(fill = "#666666")),
+    colhead = list(bg_params = list(fill = "#666666")),
+    rowhead = list(bg_params = list(fill = "#666666"))))
   class(table) <- c('cellgrob', class(table))
   cell <- plot_filler()
   class(cell) <- c('assemble_cell', class(cell))
